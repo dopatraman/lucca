@@ -1,0 +1,31 @@
+{
+  "name": "lucca",
+  "version": "0.0.0",
+  "description": "A reactive web framework",
+  "keywords": [
+    "TypeScript",
+    "framework",
+    "javascript",
+    "reactive"
+  ],
+  "author": "prakash venkatraman",
+  "repository": "dopatraman/lucca",
+  "license": "Apache-2.0",
+  "private": false,
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "main": "dist/index.js",
+  "scripts": {},
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/maquette": "2.1.6",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.19",
+    "chai": "^4.1.2",
+    "maquette": "^2.5.4",
+    "mocha": "^4.0.1",
+    "tslint": "^5.5.0",
+    "typescript": "^2.2.1"
+  }
+}
