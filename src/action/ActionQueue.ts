@@ -15,7 +15,7 @@ export class ActionQueue implements Queue<Action> {
         if (this.members.length > 0) {
             return this.members.shift();
         }
-        throw new Error('Queue is empty')
+        console.info('Action Queue is empty')
     }
 
     public peek():Action {

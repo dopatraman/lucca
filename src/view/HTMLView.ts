@@ -12,10 +12,14 @@ export class HTMLView implements View<HTMLNode> {
     private viewConstructor:Handler<HTMLNode>;
     private htmlInjector:HTMLNodeInjector;
     private viewInjector:HTMLViewInjector;
-    constructor(name:string, h:HTMLNodeInjector, v:HTMLViewInjector) {
+    private actionLookup:Map<string, Function>;
+    private actionDispatcher:ActionDispatcher;
+    constructor(name:string, h:HTMLNodeInjector, v:HTMLViewInjector, a:ActionDispatcher) {
         this.name = name;
         this.htmlInjector = h;
         this.viewInjector = v;
+        this.actionDispatcher = a;
+        this.actionLookup = new Map<string, Function>();
     }
 
     public define(viewConstructor:ViewConstructor<HTMLNode>):View<HTMLNode> {
@@ -25,6 +29,20 @@ export class HTMLView implements View<HTMLNode> {
 
     public render(data:ModelData):HTMLNode {
         let valueInjector = new ValueInjector(data);
-        return this.viewConstructor(this.htmlInjector.inject, this.viewInjector.inject, valueInjector.inject);
+        return this.viewConstructor(this.htmlInjector.inject, this.viewInjector.inject, valueInjector.inject, this.actionLookup);
+    }
+
+    public registerActions(...actionNames:string[]):View<HTMLNode> {
+        for (var i = 0; i < actionNames.length; i++) {
+            let actionName = actionNames[i];
+            this.actionLookup.set(
+                actionName,
+                this.actionDispatcher.dispatch.bind(
+                    this.actionDispatcher, 
+                    actionName
+                )
+            );
+        }
+        return this;
     }
 }

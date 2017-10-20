@@ -40,11 +40,17 @@ export class BaseReceiver implements Receiver {
         return this;
     }
 
-    public doesAcceptAction(actionName:string):boolean {
-        return this.actionStateRoutes.has(actionName);
+    public triggerStageChange(actionName:string):void {
+        if (this.doesAcceptAction(actionName)) {
+            this._model.handleStateChange(this.actionStateRoutes.get(actionName));
+        }
     }
 
-    public shouldRender():boolean {
-        return this._model.shouldRender();
+    public getRenderTree():ViewType {
+        return this._view.render(this._model.getData());
+    }
+
+    private doesAcceptAction(actionName:string):boolean {
+        return this.actionStateRoutes.has(actionName);
     }
 }

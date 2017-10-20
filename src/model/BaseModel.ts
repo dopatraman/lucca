@@ -6,7 +6,6 @@ export class BaseModel implements Model {
     private name:string;
     private data:ModelData;
     private handlers:Map<string, Handler<void>>;
-    private upForRender:boolean;
     private queueRender:Function;
 
     constructor(name:string, queueRender:Function) {
@@ -19,6 +18,10 @@ export class BaseModel implements Model {
         return this;
     }
 
+    public getData():ModelData {
+        return this.data;
+    }
+
     public handle(stateName:string, handler:Handler<void>) {
         this.handlers.set(stateName, handler);
         return this;
@@ -29,18 +32,16 @@ export class BaseModel implements Model {
     }
 
     public refresh():void {
-        this.upForRender = true;
         this.queueRender();
     }
 
-    public shouldRender():boolean {
-        return this.upForRender;
-    }
-
-    public handleAction(actionName:string) {
-        let handler = this.handlers.get(actionName);
+    public handleStateChange(stateName:string):void {
+        let handler = this.handlers.get(stateName);
         if (handler) {
-            handler.apply(null, this);
+            handler.apply(this, this.data);
+            this.refresh();
+            return;
         }
+        console.error(`state ${stateName} not handled`);
     }
 }
