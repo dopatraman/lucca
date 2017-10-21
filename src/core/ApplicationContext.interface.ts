@@ -7,6 +7,6 @@ export interface ApplicationContext<T> {
     model(name:string):Model;
     view(name:string):View<T>;
     tick():void;
-    init():void;
+    init(root:T):void;
     up():void;
 }

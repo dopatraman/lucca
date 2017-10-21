@@ -6,11 +6,9 @@ export class BaseModel implements Model {
     private name:string;
     private data:ModelData;
     private handlers:Map<string, Handler<void>>;
-    private queueRender:Function;
 
-    constructor(name:string, queueRender:Function) {
+    constructor(name:string) {
         this.name = name;
-        this.queueRender = queueRender;
     }
 
     public define(data:ModelData):Model {
@@ -32,7 +30,7 @@ export class BaseModel implements Model {
     }
 
     public refresh():void {
-        this.queueRender();
+        
     }
 
     public handleStateChange(stateName:string):void {

@@ -1,3 +1,3 @@
-import { HTMLApp } from './facade/HTMLApp';
+import { MaquetteApp } from './facade/MaquetteApp';
 
-(<any>window).lucca = new HTMLApp();
+(<any>window).lucca = new MaquetteApp();

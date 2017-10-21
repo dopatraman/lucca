@@ -1,4 +1,3 @@
-import {VNode} from 'maquette';
 import {ModelData} from './core.type';
 import {Handler} from './HandlerT.interface';
 import {ViewConstructor} from './core.type';

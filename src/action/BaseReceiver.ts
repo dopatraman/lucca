@@ -1,16 +1,14 @@
-import { ViewType } from '../core/core.type';
 import { Receiver } from '../core/Receiver.interface';
 import { Model } from '../core/Model.interface';
 import { View } from '../core/View.interface';
-import { BaseModel } from '../model/BaseModel';
-import { HTMLView } from '../view/HTMLView';
+import { DisplayProviderNode } from '../core/core.type'
 
 export class BaseReceiver implements Receiver {
     private name:string;
     private modelLookup:Map<string, Model>;
-    private viewLookup:Map<string, View<ViewType>>;
+    private viewLookup:Map<string, View<DisplayProviderNode>>;
     private _model:Model;
-    private _view:View<ViewType>;
+    private _view:View<DisplayProviderNode>;
     private actionStateRoutes:Map<string, string>;
     private dependencies: string[];
 
@@ -46,7 +44,7 @@ export class BaseReceiver implements Receiver {
         }
     }
 
-    public getRenderTree():ViewType {
+    public getRenderTree():DisplayProviderNode {
         return this._view.render(this._model.getData());
     }
 

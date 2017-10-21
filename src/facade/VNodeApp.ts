@@ -3,31 +3,29 @@ import { View } from '../core/View.interface';
 import { Receiver } from '../core/Receiver.interface';
 import { ApplicationContext } from '../core/ApplicationContext.interface';
 import { BaseModel } from '../model/BaseModel';
-import { HTMLView } from '../view/HTMLView';
-import { HTMLNodeInjector } from '../view/HTMLNodeInjector';
-import { HTMLViewInjector } from '../view/HTMLViewInjector';
+import { VNodeView } from '../view/VNodeView';
 import { BaseReceiver } from '../action/BaseReceiver';
 import { ActionDispatcher } from '../action/ActionDispatcher'
 import { ActionQueue } from '../action/ActionQueue';
-import { HTMLNode } from '../core/core.type';
-import { RenderQueue } from '../render/RenderQueue';
+import { VNodeRenderer as Renderer } from '../render/VNodeRenderer';
+import { DisplayProviderNode } from '../core/core.type'
 
-export class HTMLApp implements ApplicationContext<HTMLNode> {
+export class VNodeApp implements ApplicationContext<DisplayProviderNode> {
     private models:Map<string, Model>;
-    private views:Map<string, HTMLView>;
+    private views:Map<string, VNodeView>;
     private recv:Map<string, Receiver>;
-    private htmlInjector:HTMLNodeInjector;
-    private viewInjector:HTMLViewInjector;
+    private htmlProvider:Function;
+    private viewInjector:Function;
     private actionDispatcher:ActionDispatcher;
     private actionQueue:ActionQueue;
-    private renderQueue:RenderQueue;
+    private renderer:Renderer;
 
     constructor() {
+        this.renderer = new Renderer();
         this.actionQueue = new ActionQueue();
-        this.renderQueue = new RenderQueue();
         this.actionDispatcher = new ActionDispatcher(this.actionQueue.queue)
-        this.htmlInjector = new HTMLNodeInjector();
-        this.viewInjector = new HTMLViewInjector(this.views);
+        this.htmlProvider = this.renderer.getViewableProvider();
+        this.viewInjector = this.renderer.getViewInjector(this.views);
     }
 
     public vm(name:string):Receiver {
@@ -37,14 +35,14 @@ export class HTMLApp implements ApplicationContext<HTMLNode> {
     }
 
     public model(name:string):Model {
-        let m:Model = new BaseModel(name, this.renderQueue.queue);
+        let m:Model = new BaseModel(name);
         this.models.set(name, m)
         return m;
     }
 
-    public view(name:string):HTMLView {
-        let v = new HTMLView(name,
-            this.htmlInjector,
+    public view(name:string):View<DisplayProviderNode> {
+        let v = new VNodeView(name,
+            this.htmlProvider,
             this.viewInjector,
             this.actionDispatcher);
         this.views.set(name, v);
@@ -55,8 +53,8 @@ export class HTMLApp implements ApplicationContext<HTMLNode> {
         this.actionTick();
     }
 
-    public init():void {
-
+    public init(domNode):void {
+        this.renderer.mount(domNode, this.getAppRenderTree);
     }
 
     public up():void {
@@ -70,5 +68,14 @@ export class HTMLApp implements ApplicationContext<HTMLNode> {
                 r.triggerStageChange(nextAction);
             });
         }
+    }
+
+    private getAppRenderTree() {
+        let receivers = Array.from(this.recv.values());
+        return this.renderer.stitch(() => {
+            return receivers.map((r:Receiver) => {
+                return r.getRenderTree();
+            });
+        })
     }
 }
