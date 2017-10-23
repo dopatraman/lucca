@@ -1,6 +1,6 @@
 import { Renderer } from '../core/Renderer.interface';
 import { h, createProjector, VNode, Projector } from 'maquette'
-export class MaquetteRenderer implements Renderer<VNode> {
+export class VNodeRenderer implements Renderer<VNode> {
     private projector:Projector;
     constructor() {
         this.projector = createProjector();
