@@ -1,3 +1,3 @@
-import { MaquetteApp } from './facade/MaquetteApp';
+import { VNodeApp } from './facade/VNodeApp';
 
-(<any>window).lucca = new MaquetteApp();
+(<any>window).lucca = new VNodeApp();
