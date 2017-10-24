@@ -8,9 +8,9 @@ import { BaseReceiver } from '../action/BaseReceiver';
 import { ActionDispatcher } from '../action/ActionDispatcher'
 import { ActionQueue } from '../action/ActionQueue';
 import { VNodeRenderer as Renderer } from '../render/VNodeRenderer';
-import { DisplayProviderNode } from '../core/core.type'
+import { DisplayProviderNode, DisplayNode } from '../core/core.type'
 
-export class VNodeApp implements ApplicationContext<DisplayProviderNode> {
+export class VNodeApp implements ApplicationContext<DisplayProviderNode, DisplayNode> {
     private models:Map<string, Model>;
     private views:Map<string, VNodeView>;
     private recv:Map<string, Receiver>;
@@ -50,15 +50,12 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode> {
     }
 
     public tick():void {
+        window.requestAnimationFrame.call(this, this.tick);
         this.actionTick();
     }
 
-    public init(domNode):void {
+    public init(domNode:DisplayNode):void {
         this.renderer.mount(domNode, this.getAppRenderTree);
-    }
-
-    public up():void {
-        
     }
 
     private actionTick() {

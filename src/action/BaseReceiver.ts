@@ -12,7 +12,7 @@ export class BaseReceiver implements Receiver {
     private actionStateRoutes:Map<string, string>;
     private dependencies: string[];
 
-    constructor(name:string, modelLookup, viewLookup) {
+    constructor(name:string, modelLookup:Map<string, Model>, viewLookup:Map<string, View<DisplayProviderNode>>) {
         this.name = name;
         this.modelLookup = modelLookup;
         this.viewLookup = viewLookup;

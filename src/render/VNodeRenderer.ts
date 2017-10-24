@@ -1,16 +1,17 @@
 import { Renderer } from '../core/Renderer.interface';
-import { h, createProjector, VNode, Projector } from 'maquette'
+import { h, createProjector, VNode, Projector } from 'maquette';
+import { DisplayNode } from '../core/core.type';
 export class VNodeRenderer implements Renderer<VNode> {
     private projector:Projector;
     constructor() {
         this.projector = createProjector();
     }
 
-    public stitch(renderChildren):VNode {
+    public stitch(renderChildren:() => VNode[]):VNode {
         return h('div.appContainer', {}, renderChildren());
     }
 
-    public mount(domNode, renderFn):void {
+    public mount(domNode:DisplayNode, renderFn:() => VNode):void {
         this.projector.append(domNode, renderFn);
     }
 

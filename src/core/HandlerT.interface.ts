@@ -1,3 +1,3 @@
 export interface Handler<T> {
-    (...stuff):T;
+    (...stuff:any[]):T;
 }
