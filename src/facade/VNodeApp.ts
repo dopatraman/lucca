@@ -21,17 +21,14 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode, Display
     private renderer:Renderer;
 
     constructor() {
+        this.models = new Map<string, Model>();
+        this.views = new Map<string, VNodeView>();
+        this.recv = new Map<string, Receiver>();
         this.renderer = new Renderer();
         this.actionQueue = new ActionQueue();
         this.actionDispatcher = new ActionDispatcher(this.actionQueue.queue)
         this.htmlProvider = this.renderer.getViewableProvider();
         this.viewInjector = this.renderer.getViewInjector(this.views);
-    }
-
-    public vm(name:string):Receiver {
-        let r = new BaseReceiver(name, this.models, this.views);
-        this.recv.set(name, r);
-        return r;
     }
 
     public model(name:string):Model {
@@ -47,6 +44,12 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode, Display
             this.actionDispatcher);
         this.views.set(name, v);
         return v;
+    }
+
+    public vm(name:string):Receiver {
+        let r = new BaseReceiver(name, this.models, this.views);
+        this.recv.set(name, r);
+        return r;
     }
 
     public tick():void {

@@ -16,13 +16,17 @@
     "node": ">=6.0.0"
   },
   "main": "dist/index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "./scripts/build.sh"
+  },
   "devDependencies": {
     "@types/chai": "^4.0.4",
     "@types/maquette": "2.1.6",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.19",
     "chai": "^4.1.2",
+    "chai-spies": "^0.7.1",
+    "glob": "^7.1.2",
     "maquette": "^2.5.4",
     "mocha": "^4.0.1",
     "ts-loader": "^3.0.5",
