@@ -4,7 +4,9 @@ import { Action } from '../core/core.type';
 export class ActionQueue implements Queue<Action> {
     private members:Action[];
 
-    constructor() {}
+    constructor() {
+        this.members = [];
+    }
 
     public queue(action:Action):number {
         this.members.push(action);

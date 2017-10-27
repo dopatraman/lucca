@@ -53,7 +53,7 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode, Display
     }
 
     public tick():void {
-        window.requestAnimationFrame.call(this, this.tick);
+        window.requestAnimationFrame.call(window, this.tick.bind(this));
         this.actionTick();
     }
 

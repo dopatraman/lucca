@@ -1,10 +1,9 @@
 import { Model } from '../core/Model.interface';
-import {ModelData} from '../core/core.type';
 import {Handler} from '../core/HandlerT.interface';
 
 export class BaseModel implements Model {
     private name:string;
-    private data:ModelData;
+    private data:Map<string, any>;
     private handlers:Map<string, Handler<void>>;
 
     constructor(name:string) {
@@ -13,12 +12,14 @@ export class BaseModel implements Model {
         this.handlers = new Map<string, Handler<void>>();
     }
 
-    public define(data:ModelData):Model {
-        this.data = new Map<string, any>(data);
+    public define(data:any):Model {
+        Object.keys(data).forEach(key => {
+            this.data.set(key, data[key]);
+        });
         return this;
     }
 
-    public getData():ModelData {
+    public getData():Map<string, any> {
         return this.data;
     }
 

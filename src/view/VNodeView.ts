@@ -2,7 +2,7 @@ import { View } from '../core/View.interface';
 import { DisplayProviderNode } from '../core/core.type'
 import { Handler } from '../core/HandlerT.interface';
 import { Injector } from '../core/Injector.interface';
-import { ModelData, ViewConstructor } from '../core/core.type';
+import { ViewConstructor } from '../core/core.type';
 import { ValueInjector } from '../model/ValueInjector';
 import { ActionDispatcher } from '../action/ActionDispatcher'
 
@@ -26,7 +26,7 @@ export class VNodeView implements View<DisplayProviderNode> {
         return this;
     }
 
-    public render(data:ModelData):DisplayProviderNode {
+    public render(data:Map<string, any>):DisplayProviderNode {
         let valueInjector = new ValueInjector(data);
         return this.viewConstructor(this.htmlProvider, this.viewProvider, valueInjector.inject.bind(valueInjector), this.actionLookup);
     }

@@ -34,6 +34,7 @@
                 });
             lucca.init(document.body);
             lucca.tick();
+            chai.expect(true).to.be.true;
          });
      });
  });
