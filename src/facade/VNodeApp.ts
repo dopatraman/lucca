@@ -58,7 +58,7 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode, Display
     }
 
     public init(domNode:DisplayNode):void {
-        this.renderer.mount(domNode, this.getAppRenderTree);
+        this.renderer.mount(domNode, this.getAppRenderTree.bind(this));
     }
 
     private actionTick() {

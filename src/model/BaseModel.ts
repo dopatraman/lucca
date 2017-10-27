@@ -9,10 +9,12 @@ export class BaseModel implements Model {
 
     constructor(name:string) {
         this.name = name;
+        this.data = new Map<string, any>();
+        this.handlers = new Map<string, Handler<void>>();
     }
 
     public define(data:ModelData):Model {
-        this.data = data;
+        this.data = new Map<string, any>(data);
         return this;
     }
 

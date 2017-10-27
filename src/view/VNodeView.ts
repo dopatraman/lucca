@@ -28,7 +28,7 @@ export class VNodeView implements View<DisplayProviderNode> {
 
     public render(data:ModelData):DisplayProviderNode {
         let valueInjector = new ValueInjector(data);
-        return this.viewConstructor(this.htmlProvider, this.viewProvider, valueInjector.inject, this.actionLookup);
+        return this.viewConstructor(this.htmlProvider, this.viewProvider, valueInjector.inject.bind(valueInjector), this.actionLookup);
     }
 
     public registerActions(...actionNames:string[]):View<DisplayProviderNode> {
