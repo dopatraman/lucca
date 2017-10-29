@@ -11,7 +11,7 @@ describe("BaseModel Suite", function() {
             model.define({
                 hello:'world'
             });
-            chai.expect(model.data.get('hello')).to.equal('world');
+            chai.expect(model.data.hello).to.equal('world');
         })
     })
 })

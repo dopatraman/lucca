@@ -3,23 +3,21 @@ import {Handler} from '../core/HandlerT.interface';
 
 export class BaseModel implements Model {
     private name:string;
-    private data:Map<string, any>;
+    private data:any;
     private handlers:Map<string, Handler<void>>;
 
     constructor(name:string) {
         this.name = name;
-        this.data = new Map<string, any>();
+        this.data = {};
         this.handlers = new Map<string, Handler<void>>();
     }
 
     public define(data:any):Model {
-        Object.keys(data).forEach(key => {
-            this.data.set(key, data[key]);
-        });
+        this.data = data;
         return this;
     }
 
-    public getData():Map<string, any> {
+    public getData():any {
         return this.data;
     }
 

@@ -8,19 +8,19 @@ window.onload = function() {
             content: 'My Content'
         })
         .handle('main', function(prevModel) {
-            prevModel.set('title', 'MainNow');
-            prevModel.set('content', 'MainContent');
+            prevModel.title = 'MainNow';
+            prevModel.content = 'MainContent';
         })
         .handle('default', function(prevModel) {
-            prevModel.set('title', 'My Sidepanel');
-            prevModel.set('content', 'My Content');
+            prevModel.title = 'My Sidepanel';
+            prevModel.content = 'My Content';
         });
     lucca.view('sidepanel')
         .define((h, v, i, a) => {
             console.log(a);
             return h('div.container', {}, [
                 h('div.title', {
-                    onclick:a.get('toMain')
+                    onclick:a.toMain
                 }, [i('title')]),
                 h('div.content', {}, [i('content')])
             ])

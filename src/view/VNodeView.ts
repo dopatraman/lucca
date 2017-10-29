@@ -11,7 +11,7 @@ export class VNodeView implements View<DisplayProviderNode> {
     private viewConstructor:Handler<DisplayProviderNode>;
     private htmlProvider:Function;
     private viewProvider:Function;
-    private actionLookup:Map<string, Function>;
+    private actionLookup:any;
     private actionDispatcher:ActionDispatcher;
     constructor(name:string, h:Function, v:Function, a:ActionDispatcher) {
         this.name = name;
@@ -34,12 +34,9 @@ export class VNodeView implements View<DisplayProviderNode> {
     public registerActions(...actionNames:string[]):View<DisplayProviderNode> {
         for (var i = 0; i < actionNames.length; i++) {
             let actionName = actionNames[i];
-            this.actionLookup.set(
-                actionName,
-                this.actionDispatcher.dispatch.bind(
-                    this.actionDispatcher, 
-                    actionName
-                )
+            this.actionLookup[actionName] = this.actionDispatcher.dispatch.bind(
+                this.actionDispatcher, 
+                actionName
             );
         }
         return this;
