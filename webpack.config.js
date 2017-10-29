@@ -24,8 +24,8 @@ module.exports = [
         }
     },
     {
-        name:'test',
-        entry: glob.sync("./test/**/*.js"),
+        name:'unittest',
+        entry: glob.sync("./test/unit/**/*.spec.js"),
         module: {
             rules: [
             {
@@ -37,7 +37,25 @@ module.exports = [
             extensions: [ ".js" ]
         },
         output: {
-            filename: 'test-bundle.js',
+            filename: 'test-unit-bundle.js',
+            path: path.resolve(__dirname, 'dist')
+        }
+    },
+    {
+        name:'integrationtest',
+        entry: glob.sync("./test/integration/**/*.spec.js"),
+        module: {
+            rules: [
+            {
+                test: /\.js$/
+            }
+            ]
+        },
+        resolve: {
+            extensions: [ ".js" ]
+        },
+        output: {
+            filename: 'test-integration-bundle.js',
             path: path.resolve(__dirname, 'dist')
         }
     }

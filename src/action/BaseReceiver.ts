@@ -9,7 +9,7 @@ export class BaseReceiver implements Receiver {
     private viewLookup:Map<string, View<DisplayProviderNode>>;
     private _model:Model;
     private _view:View<DisplayProviderNode>;
-    private actionStateRoutes:Map<string, string>;
+    private actionStateRoutes:any;
     private dependencies: string[];
 
     constructor(name:string, modelLookup:Map<string, Model>, viewLookup:Map<string, View<DisplayProviderNode>>) {
@@ -28,7 +28,7 @@ export class BaseReceiver implements Receiver {
         return this;
     }
 
-    public accept(routes:Map<string, string>):Receiver {
+    public accept(routes:any):Receiver {
         this.actionStateRoutes = routes;
         return this;
     }
@@ -40,7 +40,7 @@ export class BaseReceiver implements Receiver {
 
     public triggerStageChange(actionName:string):void {
         if (this.doesAcceptAction(actionName)) {
-            this._model.handleStateChange(this.actionStateRoutes.get(actionName));
+            this._model.handleStateChange(this.actionStateRoutes[actionName]);
         }
     }
 
@@ -49,6 +49,6 @@ export class BaseReceiver implements Receiver {
     }
 
     private doesAcceptAction(actionName:string):boolean {
-        return this.actionStateRoutes.has(actionName);
+        return this.actionStateRoutes.hasOwnProperty(actionName);
     }
 }

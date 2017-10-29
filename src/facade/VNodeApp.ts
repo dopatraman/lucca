@@ -26,7 +26,7 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode, Display
         this.recv = new Map<string, Receiver>();
         this.renderer = new Renderer();
         this.actionQueue = new ActionQueue();
-        this.actionDispatcher = new ActionDispatcher(this.actionQueue.queue)
+        this.actionDispatcher = new ActionDispatcher(this.actionQueue.queue.bind(this.actionQueue))
         this.htmlProvider = this.renderer.getViewableProvider();
         this.viewInjector = this.renderer.getViewInjector(this.views);
     }
