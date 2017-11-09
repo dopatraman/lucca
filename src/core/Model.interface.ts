@@ -6,5 +6,5 @@ export interface Model {
     save():() => boolean;
     handle(stateName:string, handler:Handler<void>):Model;
     refresh():void;
-    handleStateChange(stateName:string):void;
+    handleStateChange(stateName:string, evt?:Event):void;
 }

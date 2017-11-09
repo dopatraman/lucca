@@ -1,7 +1,7 @@
 import { Receiver } from '../core/Receiver.interface';
 import { Model } from '../core/Model.interface';
 import { View } from '../core/View.interface';
-import { DisplayProviderNode } from '../core/core.type'
+import { Action, DisplayProviderNode } from '../core/core.type'
 
 export class BaseReceiver implements Receiver {
     private name:string;
@@ -38,9 +38,10 @@ export class BaseReceiver implements Receiver {
         return this;
     }
 
-    public triggerStageChange(actionName:string):void {
-        if (this.doesAcceptAction(actionName)) {
-            this._model.handleStateChange(this.actionStateRoutes[actionName]);
+    public triggerStageChange(action:Action):void {
+        if (this.doesAcceptAction(action)) {
+            let actionName = action[0]
+            this._model.handleStateChange(this.actionStateRoutes[actionName], action[1]);
         }
     }
 
@@ -48,7 +49,8 @@ export class BaseReceiver implements Receiver {
         return this._view.render(this._model.getData());
     }
 
-    private doesAcceptAction(actionName:string):boolean {
+    private doesAcceptAction(action:Action):boolean {
+        let actionName = action[0]
         return this.actionStateRoutes.hasOwnProperty(actionName);
     }
 }

@@ -1,45 +1,37 @@
-function testthis() {
-    console.log('hey');
-}
 window.onload = function() {
-    lucca.model('sidepanel')
+    lucca.model('textbind')
         .define({
-            title: 'My Sidepanel',
-            content: 'My Content',
-            test: 'hello'
+            title: 'My Sidepanel'
         })
         .handle('main', function(prevModel) {
             prevModel.title = 'MainNow';
-            prevModel.content = 'MainContent';
         })
         .handle('default', function(prevModel) {
             prevModel.title = 'My Sidepanel';
-            prevModel.content = 'My Content';
         })
         .handle('userText', function(prevModel, evt) {
             if (evt.srcElement.value) {
-                prevModel.content = evt.srcElement.value;
+                prevModel.title = evt.srcElement.value;
             }
             else {
-                prevModel.content = 'Empty!'
+                prevModel.title = 'Empty!'
             }
             
         })
-    lucca.view('sidepanel')
+    lucca.view('textbind')
         .define((h, v, i, a) => {
             console.log(a);
             return h('div.container', {}, [
                 h('div.title', {
                     onclick:a.toMain,
                 }, [i('title')]),
-                h('div.content', {}, [i('content')]),
                 h('input', {type:'text', onkeyup:a.typing})
             ])
         })
         .registerActions('toMain', 'toDefault', 'typing')
-    lucca.vm('sidepanel')
-        .model('sidepanel')
-        .view('sidepanel')
+    lucca.vm('textbind')
+        .model('textbind')
+        .view('textbind')
         .accept({
             'toMain':'main',
             'toDefault':'default',

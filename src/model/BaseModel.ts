@@ -32,10 +32,10 @@ export class BaseModel implements Model {
 
     public refresh():void {}
 
-    public handleStateChange(stateName:string):void {
+    public handleStateChange(stateName:string, evt?:Event):void {
         let handler = this.handlers.get(stateName);
         if (handler) {
-            handler.apply(this, [this.data]);
+            handler.apply(this, [this.data, evt]);
             return;
         }
         console.error(`state ${stateName} not handled`);

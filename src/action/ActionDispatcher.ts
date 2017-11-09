@@ -5,7 +5,7 @@ export class ActionDispatcher {
     constructor(queueAction:Function) {
         this.queueAction = queueAction;
     }
-    public dispatch(actionName:string):void {
-        this.queueAction(actionName);
+    public dispatch(actionName:string, e:Event):void {
+        this.queueAction([actionName, e]);
     }
 }
