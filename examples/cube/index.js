@@ -45,13 +45,13 @@ window.onload = function() {
                         style: `transform:rotateX(${i('rotateX')}deg) rotateY(${i('rotateY')}deg) rotateZ(${i('rotateZ')}deg)`
                     }, [
                         h('div.top.face', {}, [
-                            h('div.text', {}, ['Cube'])
+                            h('div.text', {}, ['Top'])
                         ]),
                         h('div.right.face', {}, [
-                            h('div.text', {}, ['Such'])
+                            h('div.text', {}, ['Right'])
                         ]),
                         h('div.left.face', {}, [
-                            h('div.text', {}, ['Wow'])
+                            h('div.text', {}, ['Left'])
                         ]),
                         h('div.bottom.face', {}, [])
                     ])
