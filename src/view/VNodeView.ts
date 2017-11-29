@@ -13,6 +13,7 @@ export class VNodeView implements View<DisplayProviderNode> {
     private viewProvider:Function;
     private actionLookup:any;
     private actionDispatcher:ActionDispatcher;
+
     constructor(name:string, h:Function, v:Function, a:ActionDispatcher) {
         this.name = name;
         this.htmlProvider = h;
