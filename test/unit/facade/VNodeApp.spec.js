@@ -97,6 +97,9 @@ describe('VNodeApp Suite', function() {
     describe('#init', function() {
         var prevMount;
         beforeEach(function() {
+            lucca.model("test");
+            lucca.view("test");
+            lucca.vm("test").model("test").view("test");
             prevMount = lucca.renderer.mount;
             lucca.renderer.mount = function() {
                 lucca.renderer.mount.called = true;

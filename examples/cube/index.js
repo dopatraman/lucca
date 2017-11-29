@@ -1,4 +1,13 @@
 window.onload = function() {
+    lucca.vm('cube')
+        .model('cube')
+        .view('cube')
+        .accept({
+            'toCube':'top',
+            'toWow':'left',
+            'toSuch':'right',
+            'toDefault':'default'
+        });
     lucca.model('cube')
         .define({
             rotateX:-20,
@@ -32,7 +41,7 @@ window.onload = function() {
         })
     lucca.view('cube')
         .define(function(h, v, i, a) {
-            return h('div.container', {
+            return h(`div.container`, {
                 classes: {
                     'top': i('currentFace') == 'top',
                     'left': i('currentFace') == 'left',
@@ -73,15 +82,6 @@ window.onload = function() {
             ])
         })
         .registerActions('toCube', 'toWow', 'toSuch', 'toDefault')
-    lucca.vm('cube')
-        .model('cube')
-        .view('cube')
-        .accept({
-            'toCube':'top',
-            'toWow':'left',
-            'toSuch':'right',
-            'toDefault':'default'
-        })
     
     lucca.init(document.body);
     lucca.tick();

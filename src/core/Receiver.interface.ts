@@ -7,7 +7,7 @@ export interface Receiver {
     model(name:string):Receiver;
     view(name:string):Receiver;
     accept(actions:Map<string, string>):Receiver;
-    contains(...dependencies:string[]):Receiver;
-    triggerStageChange(action:Action):void;
+    triggerStateChange(action:Action):void;
     getRenderTree():DisplayProviderNode;
+    init(...params:any[]):void;
 }

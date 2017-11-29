@@ -5,26 +5,37 @@ import { Action, DisplayProviderNode } from '../core/core.type'
 
 export class BaseReceiver implements Receiver {
     private name:string;
-    private modelLookup:Map<string, Model>;
-    private viewLookup:Map<string, View<DisplayProviderNode>>;
+    private _modelName:string;
+    private _viewName:string;
     private _model:Model;
     private _view:View<DisplayProviderNode>;
     private actionStateRoutes:any;
     private dependencies: string[];
 
-    constructor(name:string, modelLookup:Map<string, Model>, viewLookup:Map<string, View<DisplayProviderNode>>) {
+    constructor(name:string) {
         this.name = name;
-        this.modelLookup = modelLookup;
-        this.viewLookup = viewLookup;
+    }
+
+    public init(modelLookup: Map<string, Model>, viewLookup:Map<string, View<DisplayProviderNode>>):void {
+        let m:Model = modelLookup.get(this._modelName);
+        let v:View<DisplayProviderNode> = viewLookup.get(this._viewName);
+        if (m == null) {
+            throw new Error(`model ${this._modelName} is null`)
+        }
+        if (v == null) {
+            throw new Error(`view ${this._viewName} is null`)
+        }
+        this._model = m;
+        this._view = v;
     }
 
     public model(name:string):Receiver {
-        this._model = this.modelLookup.get(name);
+        this._modelName = name;
         return this;
     }
 
     public view(name:string):Receiver {
-        this._view = this.viewLookup.get(name);
+        this._viewName = name;
         return this;
     }
 
@@ -33,12 +44,10 @@ export class BaseReceiver implements Receiver {
         return this;
     }
 
-    public contains(...dependencies:string[]):Receiver {
-        this.dependencies = dependencies;
-        return this;
-    }
-
-    public triggerStageChange(action:Action):void {
+    public triggerStateChange(action:Action):void {
+        if (this._model == null) {
+            throw new Error("model cannot be null");
+        }
         if (this.doesAcceptAction(action)) {
             let actionName = action[0]
             this._model.handleStateChange(this.actionStateRoutes[actionName], action[1]);
@@ -46,10 +55,16 @@ export class BaseReceiver implements Receiver {
     }
 
     public getRenderTree():DisplayProviderNode {
+        if (this._view == null) {
+            throw new Error("view cannot be null")
+        }
         return this._view.render(this._model.getData());
     }
 
     private doesAcceptAction(action:Action):boolean {
+        if (this.actionStateRoutes == null) {
+            throw new Error("action routes cannot be null");
+        }
         let actionName = action[0]
         return this.actionStateRoutes.hasOwnProperty(actionName);
     }

@@ -47,7 +47,7 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode, Display
     }
 
     public vm(name:string):Receiver {
-        let r = new BaseReceiver(name, this.models, this.views);
+        let r = new BaseReceiver(name);
         this.recv.set(name, r);
         return r;
     }
@@ -58,6 +58,7 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode, Display
     }
 
     public init(domNode:DisplayNode):void {
+        this.recv.forEach((r:Receiver) => { r.init(this.models, this.views) });
         this.renderer.mount(domNode, this.getAppRenderTree.bind(this));
     }
 
@@ -65,7 +66,7 @@ export class VNodeApp implements ApplicationContext<DisplayProviderNode, Display
         let nextAction = this.actionQueue.dequeue();
         if (nextAction) {
             this.recv.forEach((r:Receiver) => {
-                r.triggerStageChange(nextAction);
+                r.triggerStateChange(nextAction);
             });
         }
     }
