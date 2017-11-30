@@ -41,41 +41,41 @@ window.onload = function() {
         })
     lucca.view('cube')
         .define(function(h, v, i, a) {
-            return h(`div.container`, {
+            return h.tml(`div.container`, {
                 classes: {
-                    'top': i('currentFace') == 'top',
-                    'left': i('currentFace') == 'left',
-                    'right': i('currentFace') == 'right',
-                    'default': i('currentFace') == 'default'
+                    'top': i['currentFace'] == 'top',
+                    'left': i['currentFace'] == 'left',
+                    'right': i['currentFace'] == 'right',
+                    'default': i['currentFace'] == 'default'
                 }
             }, [
-                h('div.cubecontainer', {}, [
-                    h('div.cube', {
-                        style: `transform:rotateX(${i('rotateX')}deg) rotateY(${i('rotateY')}deg) rotateZ(${i('rotateZ')}deg)`
+                h.tml('div.cubecontainer', {}, [
+                    h.tml('div.cube', {
+                        style: `transform:rotateX(${i['rotateX']}deg) rotateY(${i['rotateY']}deg) rotateZ(${i['rotateZ']}deg)`
                     }, [
-                        h('div.top.face', {}, [
-                            h('div.text', {}, ['Top'])
+                        h.tml('div.top.face', {}, [
+                            h.tml('div.text', {}, ['Top'])
                         ]),
-                        h('div.right.face', {}, [
-                            h('div.text', {}, ['Right'])
+                        h.tml('div.right.face', {}, [
+                            h.tml('div.text', {}, ['Right'])
                         ]),
-                        h('div.left.face', {}, [
-                            h('div.text', {}, ['Left'])
+                        h.tml('div.left.face', {}, [
+                            h.tml('div.text', {}, ['Left'])
                         ]),
-                        h('div.bottom.face', {}, [])
+                        h.tml('div.bottom.face', {}, [])
                     ])
                 ]),
-                h('div.buttonbar', {}, [
-                    h('div.button', {
+                h.tml('div.buttonbar', {}, [
+                    h.tml('div.button', {
                         onclick: a.toCube
                     }, ['Top']),
-                    h('div.button', {
+                    h.tml('div.button', {
                         onclick: a.toWow
                     }, ['Left']),
-                    h('div.button', {
+                    h.tml('div.button', {
                         onclick: a.toSuch
                     }, ['Right']),
-                    h('div.button', {
+                    h.tml('div.button', {
                         onclick: a.toDefault
                     }, ['Default'])
                 ])

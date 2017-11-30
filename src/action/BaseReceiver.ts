@@ -58,7 +58,7 @@ export class BaseReceiver implements Receiver {
         if (this._view == null) {
             throw new Error("view cannot be null")
         }
-        return this._view.render(this._model.getData());
+        return this._view.render(this._model);
     }
 
     private doesAcceptAction(action:Action):boolean {

@@ -1,5 +1,5 @@
 import { Model } from '../core/Model.interface';
-import {Handler} from '../core/HandlerT.interface';
+import { Handler } from '../core/HandlerT.interface';
 
 export class BaseModel implements Model {
     private name:string;
@@ -26,7 +26,7 @@ export class BaseModel implements Model {
         return this;
     }
 
-    public save():()=> false {
+    public save():()=> boolean {
         return (() => false);
     }
 

@@ -1,20 +1,22 @@
 import { View } from '../core/View.interface';
+import { Model } from '../core/Model.interface';
 import { DisplayProviderNode } from '../core/core.type'
 import { Handler } from '../core/HandlerT.interface';
 import { Injector } from '../core/Injector.interface';
 import { ViewConstructor } from '../core/core.type';
 import { ValueInjector } from '../model/ValueInjector';
 import { ActionDispatcher } from '../action/ActionDispatcher'
+import { VNodeProvider } from '../render/VNodeProvider';
 
 export class VNodeView implements View<DisplayProviderNode> {
     private name:string;
     private viewConstructor:Handler<DisplayProviderNode>;
-    private htmlProvider:Function;
+    private htmlProvider:VNodeProvider;
     private viewProvider:Function;
     private actionLookup:any;
     private actionDispatcher:ActionDispatcher;
 
-    constructor(name:string, h:Function, v:Function, a:ActionDispatcher) {
+    constructor(name:string, h:VNodeProvider, v:Function, a:ActionDispatcher) {
         this.name = name;
         this.htmlProvider = h;
         this.viewProvider = v;
@@ -27,9 +29,8 @@ export class VNodeView implements View<DisplayProviderNode> {
         return this;
     }
 
-    public render(data:Map<string, any>):DisplayProviderNode {
-        let valueInjector = new ValueInjector(data);
-        return this.viewConstructor(this.htmlProvider, this.viewProvider, valueInjector.inject.bind(valueInjector), this.actionLookup);
+    public render(model:Model):DisplayProviderNode {
+        return this.viewConstructor(this.htmlProvider, this.viewProvider, model.getData(), this.actionLookup);
     }
 
     public registerActions(...actionNames:string[]):View<DisplayProviderNode> {
