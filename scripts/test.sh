@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-sh ./scripts/build.sh && open ./dist/test.html
+sh ./scripts/build.sh && sh ./scripts/open_browser.sh
