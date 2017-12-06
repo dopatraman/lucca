@@ -6,7 +6,8 @@
     "TypeScript",
     "framework",
     "javascript",
-    "reactive"
+    "reactive",
+    "lucca"
   ],
   "author": "prakash venkatraman",
   "repository": "dopatraman/lucca",
@@ -20,7 +21,8 @@
     "build": "./scripts/build.sh",
     "clean": "./scripts/clean.sh",
     "test": "./scripts/test.sh",
-    "examples": "./scripts/examples.sh"
+    "examples": "./scripts/examples.sh",
+    "prepublish": "npm run clean && npm run build"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
