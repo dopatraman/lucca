@@ -38,7 +38,7 @@ module.exports = [
         },
         output: {
             filename: 'test-unit-bundle.js',
-            path: path.resolve(__dirname, 'dist')
+            path: path.resolve(__dirname, 'dist/test')
         }
     },
     {
@@ -56,7 +56,7 @@ module.exports = [
         },
         output: {
             filename: 'test-integration-bundle.js',
-            path: path.resolve(__dirname, 'dist')
+            path: path.resolve(__dirname, 'dist/test')
         }
     }
 ];

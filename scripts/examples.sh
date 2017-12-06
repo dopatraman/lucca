@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-sh ./scripts/build.sh && \ 
-cp -v ./examples/textbind/index.html ./dist/textbind.html
-cp -v ./examples/textbind/index.css ./dist/textbind.css
-cp -v ./examples/textbind/index.js ./dist/textbind-bundle.js
+sh ./scripts/build.sh
+mkdir -p ./dist/examples
+cp -v ./examples/textbind/index.html ./dist/examples/textbind.html
+cp -v ./examples/textbind/index.css ./dist/examples/textbind.css
+cp -v ./examples/textbind/index.js ./dist/examples/textbind-bundle.js
 
-cp -v ./examples/cube/index.html ./dist/cube.html
-cp -v ./examples/cube/index.css ./dist/cube.css
-cp -v ./examples/cube/index.js ./dist/cube-bundle.js
+cp -v ./examples/cube/index.html ./dist/examples/cube.html
+cp -v ./examples/cube/index.css ./dist/examples/cube.css
+cp -v ./examples/cube/index.js ./dist/examples/cube-bundle.js
